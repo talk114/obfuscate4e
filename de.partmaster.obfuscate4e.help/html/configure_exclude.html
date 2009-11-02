@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <title>Excluding classes or packages from obfuscation</title>
+</head>
+
+<body>
+  <h1>Excluding classes or packages from obfuscation</h1>
+
+<p>Obfuscate4e detects exported packages and and writes the corresponding obfuscation 
+exclusion statements automatically into the file <em>proguard.cfg</em> at your 
+plugin's root directory.</p>
+
+<p>Starting from version 0.7 of <em>obfuscate4e</em> all classes references from plugin
+extensions (in <em>plugin.xml</em>) are automatically inserted into the obfuscator 
+exclusion list. Thus the obfuscate4e configuration should be updated whenever a new extension
+is added to the plugin.<br/>
+<em>Remark: This feature works only on Eclipse 3.4 (there seems to be a bug or non-implemented
+feature in Eclipse 3.2 and 3.3)</em></p>
+
+<p>Of course you can add custom exclusion statements by hand. For instance If a class gets
+instantiated via reflection or is referenced by name in any other way, it has to be excluded.</p>
+</body>
+</html>
