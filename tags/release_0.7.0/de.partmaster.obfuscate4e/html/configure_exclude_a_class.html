@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <title>Exclude a single class</title>
+</head>
+
+<body>
+  <h1>Exclude a single class</h1>
+
+  <p>You might want to exclude a certain file from obfuscation. This might be the case if the class is used in an
+  extension of your plugin.</p>
+
+  <p>To exclude a class from obfuscation you have to add a statement like</p>
+  <pre>
+-keep class de.example.plugin.actions.MySpecialAction {
+   public protected *;
+}
+</pre>
+
+  <p>to the <em>proguard.cfg</em> file. All other classes in the package <em>de.example.plugin.actions</em> are
+  completely obfuscated</p>
+
+  <p><em>Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the
+  configuration!</em></p>
+</body>
+</html>

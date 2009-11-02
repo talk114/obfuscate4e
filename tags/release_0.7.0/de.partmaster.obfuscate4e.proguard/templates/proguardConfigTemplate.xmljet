@@ -1,0 +1,29 @@
+<%@ jet package="de.partmaster.obfuscate4e.proguard.generator" imports="java.util.List de.partmaster.obfuscate4e.generator.IBuildGenerator de.partmaster.obfuscate4e.generator.ProjectData" class="ProguardConfigGenerator" skeleton="buildCallbacks.skeleton"%>
+<% List excludePackages = argument.getExcludePackages(); %>
+<% List excludeClasses = argument.getExcludeClasses(); %>
+
+# Template file of the proguard configuration
+# specify your custom proguard settings here
+# see: http://proguard.sourceforge.net/manual/index.html
+
+-dontusemixedcaseclassnames
+
+-keep class * implements org.osgi.framework.BundleActivator {
+	public *; 
+}
+
+-keep class * extends org.eclipse.osgi.util.NLS {
+	public *; 
+}
+
+<% for (int i=0; i<excludeClasses.size(); i++) {%>
+-keep class <%=excludeClasses.get(i)%> {
+ 	public protected *;
+}   
+<% } %>			
+
+<% for (int i=0; i<excludePackages.size(); i++) {%>
+-keep class <%=excludePackages.get(i)%>.* {
+ 	public protected *;
+}   
+<% } %>			

@@ -1,0 +1,25 @@
+<project name="Obfuscate4e update site" default="zip">
+
+	<!-- ================================= 
+          target: zip              
+         ================================= -->
+    <target name="zip" description="--> create an update site archive">
+    	<pathconvert property="site.version">
+	        <path>
+	        	<fileset dir="${basedir}/features" includes="de.partmaster.obfuscate4e_*.jar" />
+        	</path>
+        	<mapper type="regexp" from=".*_(.*)\.jar$$" to="\1"/>
+		</pathconvert>
+        <zip destfile="obfuscate4e-updates-${site.version}.zip" >
+        	<fileset dir="${basedir}">
+        		<include name="features/**"/>
+        		<include name="plugins/**"/>
+        		<include name="web/**"/>
+        		<include name="site.xml"/>
+        		<include name="*.jar"/>
+        		<exclude name="**/.svn"/>
+        	</fileset>
+        </zip>
+    </target>
+
+</project>

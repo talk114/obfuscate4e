@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <title>Obfuscate your code</title>
+</head>
+
+<body>
+  <h1>Obfuscate your code</h1>
+
+  <p>It's time to use your obfuscator. As it is embedded into the built process Eclipse runs the obfuscator when
+  exporting a plugin, a project or a complete product.</p>
+
+  <p>Export a plugin with <em>File &gt; Export ...</em></p><img alt="Export your plugin" src=
+  "images/export_plugin_preview.png" width="381" height="400">
+
+  <p>The plugin will be obfuscated and exported.</p>
+
+  <p>If you <a href="http://obfuscate4e.partmaster.de/run-the-obfuscator-in-verbose-mode">run the obfuscation in
+  "verbose" mode</a>, then you can see ant processing the plugin and&nbsp; check the applied names mapping in the file
+  <em>proguard.map</em>. This file is located in the folder <em>temp.folder/</em> of the plugin. This file shows a list
+  of processed files as well as the names of class, fields and methods after obfuscation.</p><img alt=
+  "Watch the applied mapping of classes, fields and methods" src="images/proguard_map_preview.png">
+</body>
+</html>

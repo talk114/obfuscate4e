@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Obfuscate4e Help Plug-in
+Bundle-SymbolicName: de.partmaster.obfuscate4e.help;singleton:=true
+Bundle-Version: 0.7.1.qualifier
+Bundle-Vendor: PartMaster GmbH
+Require-Bundle: org.eclipse.help

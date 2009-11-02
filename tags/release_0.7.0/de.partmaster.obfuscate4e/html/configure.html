@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <title></title>
+  <title>Configure the obfuscation</title>
+</head>
+
+<body>
+  <h1>Configure the obfuscation</h1>
+
+  <p>Now it's time to configure how <em>obfuscate4e</em> and its embedded obfuscator should work. We use the ProGuard
+  obfuscator in this sectin. The configuration of other obfuscators will differ.</p>
+
+  <p>Execute the action <em>Create custombuildcallbacks.xml for ProGuard</em> from the context menu of the plugin
+  <em>MANIFEST.MF</em>.</p>
+
+  <p><img alt="Generate custombuildcallbacks.xml" src="images/generate_custombuildcallbacks.png"></p>
+
+  <p>In the project folder appear two new files: <em>customBuildCallbacks.xml</em> and <em>proguard.cfg</em>. These
+  files are managed inside your project (and also version controlled).</p>
+
+  <p><img src="images/new_custombuildcallbacks.png" alt="New build script"></p>
+
+  <p>ProGuard allows to highly customize the obfuscation process. You can add cunfiguration statements to the
+  <em>proguard.cfg</em> file. See <a href="http://proguard.sourceforge.net/manual/usage.html" title=
+  "http://proguard.sourceforge.net/manual/usage.html">http://proguard.sourceforge.net/manual/usage.html</a> for valid
+  configuration parameters.</p>
+</body>
+</html>

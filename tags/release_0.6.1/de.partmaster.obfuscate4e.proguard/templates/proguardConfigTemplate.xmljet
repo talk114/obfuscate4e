@@ -1,0 +1,25 @@
+<%@ jet package="de.partmaster.obfuscate4e.proguard.generator" imports="java.util.List de.partmaster.obfuscate4e.generator.IBuildGenerator" class="ProguardConfigTemplate" skeleton="buildCallbacks.skeleton"%>
+<% List exportList = (List)argument; %>
+# Template file of the proguard configuration
+# specify your custom proguard settings here
+# see: http://proguard.sourceforge.net/manual/index.html
+
+-keep class * implements org.osgi.framework.BundleActivator {
+	public *; 
+}
+
+<% for (int i=0; i<exportList.size(); i++) {%>
+-keep class <%=exportList.get(i)%>.* {
+ 	public protected *;
+}   
+<% } %>			
+			         			
+# specify content to keep like this:
+#
+# -keep class de.partmaster.obfuscate4e.*  {
+# 	public protected *;
+# }
+# 
+# -keep class de.partmaster.**  {
+# 	public protected *;
+# }

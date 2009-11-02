@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Proguard Obfuscator Plug-in
+Bundle-SymbolicName: proguard;singleton:=true
+Bundle-Version: 4.2.0
+Bundle-Vendor: Proguard project
+Require-Bundle: org.eclipse.ant.core
+

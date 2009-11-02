@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org">
+
+  <title>Run the obfuscator in verbose mode</title>
+</head>
+
+<body>
+  <h1>Run the obfuscator in verbose mode</h1>
+
+  <p>It might happen that the obfuscation does not work as expected. In this case there may be some "strange" folders
+  in your project and the generated plugin jar contains non-obfuscated classes.</p>
+
+  <p>But the build process runs in headless mode and no errors or warnings are printed out in the console view.</p>
+
+  <p>The easiest way to debug the obfuscation process is to create and execute a build.xml file for the plugin.</p>
+
+  <p>At first generate a build.xml file by clicking on <em>PDE Tools &gt; Create Ant Build File</em> in the context
+  menu of the project or the <em>META-INF/MANIFEST.MF</em> file.</p>
+
+  <p>Then run the build.xml file by clicking the <em>Run As &gt; Ant Build</em> entry of the context menu of the
+  <em>build.xml</em> file.</p>
+
+  <p>The output of the plugin build is shown in the console view. Warnings and error messages are highlighted.</p>
+
+  <p><img alt="Run the build script" src="images/run-build_xml_preview.png" width="400" height="159"></p>
+
+  <p>The target <em>post.@dot</em> contains the messages relevant to the obfuscation. In the above screenshot there is
+  a error message:</p>
+  <pre>
+[subant] Failure for target 'post.@dot' of: 
+         /home/drue/prj/de.partmaster.mytest/customBuildCallbacks.xml
+[subant] The following error occurred while executing this line:
+[subant] /home/drue/prj/de.partmaster.mytest/customBuildCallbacks.xml:119: 
+         Problem: failed to create task or type proguard
+[subant] Cause: The name is undefined.
+[subant] Action: Check the spelling.
+[subant] Action: Check that any custom tasks/types have been declared.
+[subant] Action: Check that any &lt;presetdef&gt;/&lt;macrodef&gt; declarations
+         have taken place.
+</pre>
+
+  <p>In this case <em>Ant</em> could not find the declaration of the <em>proguard</em> task. This should not happen in
+  practice - otherwise check your Eclipse installation in <em>Help &gt; Software Updates &gt; Manage configuration</em>
+  for broken plugin dependencies.</p>
+
+  <p>As a rule of thumb you should follow make sure that you</p>
+
+  <ol>
+    <li>rebuild the <em>customBuildCallbacks.xml</em> file if you change the package structure of the plugin,</li>
+
+    <li>rebuild the <em>build.xml</em> file if you change anything in <em>customBuildCallbacks.xml</em>.</li>
+
+    <li>run the <em>build.xml</em> script in verbose mode if you cant find the error.</li>
+
+    <li>Attach the verbose console output together with the file proguard.properties to any <a href=
+    "https://sourceforge.net/tracker/?group_id=202507">bug report</a> and name the version of Java and Eclipse you are
+    using.</li>
+  </ol>
+</body>
+</html>
