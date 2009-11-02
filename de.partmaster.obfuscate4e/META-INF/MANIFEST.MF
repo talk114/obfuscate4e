@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Obfuscation 4 Eclipse Plug-In 
+Bundle-SymbolicName: de.partmaster.obfuscate4e;singleton:=true
+Bundle-Version: 0.6.1.qualifier
+Bundle-Activator: de.partmaster.obfuscate4e.Activator
+Bundle-Vendor: Partaster GmbH
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.filesystem,
+ org.eclipse.pde.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.pde.core;visibility:=reexport
+Eclipse-LazyStart: true
+Export-Package: de.partmaster.obfuscate4e,
+ de.partmaster.obfuscate4e.generator
