@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="manifest.mf"
+            id="de.partmaster.obfuscate4e.actions">
+         <action
+               label="Create customBuildCallbacks for Proguard"
+               class="de.partmaster.obfuscate4e.proguard.ProguardCallbacksAction"
+               menubarPath="org.eclipse.pde.ui.manifest.tools/group1"
+               enablesFor="1"
+               id="de.partmaster.obfuscate4e.proguard.ProguardCallbacksAction">
+         </action>
+     </objectContribution>
+ 	</extension>
+    <extension
+         point="org.eclipse.ant.core.extraClasspathEntries">
+      <extraClasspathEntry
+            library="lib/de.partmaster.obfuscate4e.ant_0.6.3.200901121425.jar">
+      </extraClasspathEntry>
+   </extension>
+ 	    
+</plugin>

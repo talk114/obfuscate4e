@@ -1,0 +1,6 @@
+public class CLASS implements IBuildGenerator {
+
+	public String generate(Object argument) {
+		return "";
+	}
+}
