@@ -1,0 +1,244 @@
+<%@ jet package="de.partmaster.obfuscate4e.proguard.generator" imports="java.util.List de.partmaster.obfuscate4e.generator.IBuildGenerator" class="ProguardBuildTemplate" skeleton="buildCallbacks.skeleton"%>
+<% List exportList = (List)argument; %>
+<!-- ===================================================================== -->
+<!-- Custom targets called from a project's generated build.xml            -->
+<!-- Set customBuildCallbacks=<path/to/this/file> in your build.properties.-->
+<!-- ===================================================================== -->
+<!--
+   $Id:$
+ -->
+<project name="Build specific targets and properties" default="noDefault">
+
+	<!-- ===================================================================== -->
+	<!-- Default target                                                        -->
+	<!-- ===================================================================== -->
+	<target name="noDefault">
+		<echo message="This file must be called with explicit targets" />
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target build.jars                              -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="pre.build.jars">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target build.jars                               -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="post.build.jars">
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target build.sources                           -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="pre.build.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target build.sources                            -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="post.build.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the compilation target <name>                      -->
+	<!-- Substitute "name" with the name of the compilation target, eg @dot    -->
+	<!-- Available parameters :                                                -->
+	<!--   source.foldern : n = 1 ... N, the source folders                    -->
+	<!--   target.folder  : where the results of the compilation go            -->
+	<!--   <name>.classpath : name = name of the compilation target. A         -->
+	<!--                      reference to the classpath structure.            -->
+	<!-- ===================================================================== -->
+	<target name="pre.name">
+	</target>
+
+	<target name="pre.@dot">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do during the compilation target <name>, after the compile   -->
+	<!-- but before jaring.  Substitute "name" with the name of the compilation-->
+	<!-- target, eg @dot                                                       -->
+	<!-- Available parameters :                                                -->
+	<!--   source.foldern : n = 1 ... N, the source folders                    -->
+	<!--   target.folder  : where the results of the compilation go            -->
+	<!--   <name>.classpath : name = name of the compilation target. A         -->
+	<!--                      reference to the classpath structure.            -->
+	<!-- ===================================================================== -->
+	<target name="post.compile.name">
+	</target>
+
+	<target name="post.compile.@dot">
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the compilation target <name>                       -->
+	<!-- Substitute "name" with the name of the compilation target, eg @dot    -->
+	<!-- Available parameters :                                                -->
+	<!--   jar.location - the location of the compilation results              -->
+	<!--   <name>.classpath : name = name of the compilation target. A         -->
+	<!--                      reference to the classpath structure.            -->
+	<!-- ===================================================================== -->
+	<target name="post.name">
+	</target>
+
+	<target name="post.@dot">
+		<property name="tmp.dir" value="temp_proguard" />
+		<property name="tmp.filename" value="classes.jar" />
+		<property name="tmp.dir.original" value="${tmp.dir}/original" />
+		<property name="tmp.file.original" value="${tmp.dir.original}/${tmp.filename}" />
+		<property name="tmp.dir.obfuscated" value="${tmp.dir}/obfuscated" />
+		<property name="tmp.file.obfuscated" value="${tmp.dir.obfuscated}/${tmp.filename}" />
+
+		<!-- 
+			we need to strip off non-existing files or directories in classpath, 
+			because proguard doesn't like them
+		-->
+		<pathconvert property="tmp.classpath" refid="@dot.classpath">
+			<mapper classname="de.partmaster.ant.ExistsFileNameMapper">
+			</mapper>
+		</pathconvert>
+		
+		<!--
+			make a temporary directory to put temp-file into
+		-->
+		<mkdir dir="${tmp.dir.original}" />
+		<mkdir dir="${tmp.dir.obfuscated}" />
+
+		<!--
+			jar the original classes into temp file
+		-->
+		<jar destfile="${tmp.file.original}" basedir="${jar.Location}" />
+
+		<!--
+			run obfuscation, result is put into temp subfolder 'obfuscate'
+		-->				
+		<proguard printseeds="on" printmapping="on" verbose="on" ignorewarnings="on">
+			-injars ${tmp.file.original}
+			-outjars ${tmp.dir.obfuscated}
+			-libraryjars ${java.home}/lib/rt.jar
+			-libraryjars ${tmp.classpath}
+			-printmapping proguard.map
+			
+<% for (int i=0; i<exportList.size(); i++) {%>
+			-keep class <%=exportList.get(i)%>.* {
+			 	public protected *;
+			}   
+<% } %>			
+
+			-keep class * implements org.osgi.framework.BundleActivator {
+				public *; 
+			}
+			         			
+			# specify content to keep like this:
+			#
+			# -keep class de.partmaster.licenses.*  {
+			# 	public protected *;
+			# }
+			# 
+			# -keep class de.partmaster.**  {
+			# 	public protected *;
+			# }
+		</proguard>
+			
+		<!--
+			remove original (unobfuscated) classes from build location
+		-->
+		<delete includeemptydirs="true">
+			<fileset dir="${jar.Location}" includes="**/*" />
+		</delete>
+
+		<!--
+			extract obfuscated content into build location
+		-->
+		<unjar src="${tmp.file.obfuscated}" dest="${jar.Location}" />
+
+		<!--
+			remove manifest.mf artifact
+		-->
+		<delete file="${jar.Location}/META-INF/MANIFEST.MF"/>
+		
+		<!--
+			delete all temporary content
+		-->
+		<delete includeemptydirs="true">
+			<fileset dir="${tmp.dir}"/>
+		</delete>
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target gather.bin.parts                         -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder containing the build results           -->
+	<!--   target.folder - destination folder                                  -->
+	<!-- ===================================================================== -->
+	<target name="pre.gather.bin.parts">
+	</target>
+		
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target gather.bin.parts                         -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder containing the build results           -->
+	<!--   target.folder - destination folder                                  -->
+	<!-- ===================================================================== -->
+	<target name="post.gather.bin.parts">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target gather.sources                          -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="pre.gather.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target gather.sources                           -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="post.gather.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target gather.logs                             -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="pre.gather.logs">        
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target gather.logs                              -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="post.gather.logs">       
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target clean                                   -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="pre.clean">              
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target clean                                    -->
+	<!-- Available parameters :                                                -->
+	<!--   plugin.destination - final destination of the build                 -->
+	<!--   build.result.folder - results of the compilation                    -->
+	<!--   temp.folder - temporary folder                                      -->
+	<!-- ===================================================================== -->
+	<target name="post.clean">             
+	</target>
+</project>

@@ -1,0 +1,10 @@
+// $Id:$
+ 
+import de.partmaster.obfuscate4e.generator.IBuildGenerator;
+
+public class CLASS implements IBuildGenerator {
+
+	public String generate(Object argument) {
+		return "";
+	}
+}
