@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ant Tasks Plug-in
+Bundle-SymbolicName: de.partmaster.obfuscate4e.ant;singleton:=true
+Bundle-Version: 0.6.3.qualifier
+Bundle-Activator: de.partmaster.obfuscate4e.ant.Activator
+Bundle-Vendor: PartMaster GmbH
+Require-Bundle: org.eclipse.core.runtime,
+ org.apache.ant,
+ org.eclipse.ant.core
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Eclipse-LazyStart: true
+Bundle-ClassPath: .
+Export-Package: de.partmaster.obfuscate4e.ant
