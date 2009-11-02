@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension
+          point="org.eclipse.ui.preferencePages">
+       <page
+             category="org.obfuscate4e.preferences.Obfuscate4ePreferencePage"
+             class="org.obfuscate4e.proguard.preferences.ProguardPreferencePage"
+             id="org.obfuscate4e.proguard.preferences.ProguardPreferencePage"
+             name="Proguard">
+       </page>
+    </extension>
+    <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.obfuscate4e.proguard.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+    <extension
+          point="org.obfuscate4e.ObfuscationConfigurator">
+       <obfuscationConfigurator
+             class="org.obfuscate4e.proguard.ProguardObfuscationConfigurator">
+       </obfuscationConfigurator>
+    </extension>
+    
+</plugin>

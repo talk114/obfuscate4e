@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <title>Exclude all classes in a package</title>
+</head>
+
+<body>
+  <h1>Exclude all classes in a packages</h1>
+
+<p>By default <em>obfuscate4e</em> adds all exported packages of a plugin to the exclusion list.<br/>
+There are to options if you want to add other packages to the exclution list:
+<ol>
+<li>Export the package using the Manifest editor (if this is useful for your project)</li>
+<li>Add a following lines to the plugin's <em>proguard.cfg</em> file:
+     <pre>-keep class de.example.plugin.* {<br />   public protected *;<br />}</pre>
+    <em>Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!</em></li>
+</ol>
+</p>
+</body>
+</html>

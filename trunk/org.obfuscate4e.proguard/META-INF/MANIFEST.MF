@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-Name: Proguard Plug-in for Obfuscate4e
+Bundle-Vendor: PartMaster GmbH
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.obfuscate4e.proguard;singleton:=true
+Bundle-Version: 0.7.8.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.eclipse.ant.core,
+ org.obfuscate4e,
+ org.eclipse.jdt.core
+Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Export-Package: org.obfuscate4e.proguard,
+ org.obfuscate4e.proguard.generator
+Bundle-Activator: org.obfuscate4e.proguard.Activator
+
