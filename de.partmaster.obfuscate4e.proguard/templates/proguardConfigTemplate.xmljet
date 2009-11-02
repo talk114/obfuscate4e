@@ -1,0 +1,41 @@
+<%@ jet package="de.partmaster.obfuscate4e.proguard.generator" imports="java.util.List de.partmaster.obfuscate4e.generator.IBuildGenerator de.partmaster.obfuscate4e.generator.ProjectData" class="ProguardConfigGenerator" skeleton="buildCallbacks.skeleton"%>
+<% List excludedPackages = argument.getExcludedPackages(); %>
+<% List excludedClasses = argument.getExcludedClasses(); %>
+<% String staticPart = argument.getStaticPart(); %>
+#
+# Template file of the proguard configuration
+# specify your custom proguard settings here
+# see: http://proguard.sourceforge.net/manual/index.html
+
+# Statements and excludes below are generated from the Eclipse project settings.
+# Changes in here will be overwritten in the configuration creation process.
+#
+###GENERATED###
+
+-dontusemixedcaseclassnames
+
+-keep class * implements org.osgi.framework.BundleActivator {
+	public *; 
+}
+
+-keep class * extends org.eclipse.osgi.util.NLS {
+	public *; 
+}
+
+<% for (int i=0; i<excludedClasses.size(); i++) {%>
+-keep class <%=excludedClasses.get(i)%> {
+ 	public protected *;
+}   
+<% } %>			
+
+<% for (int i=0; i<excludedPackages.size(); i++) {%>
+-keep class <%=excludedPackages.get(i)%>.* {
+ 	public protected *;
+}   
+<% } %>			
+
+# Statements below the static marker will not be affected by any updates.
+# Changes in the static section will be carried with every creation process.
+#
+<%=de.partmaster.obfuscate4e.proguard.ProguardConfigFileUpdater.STATIC_MARKER%>
+<%=staticPart%>

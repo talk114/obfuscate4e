@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://obfuscate4e.partmaster.de/updates/">
+      Obfuscate4e updates site
+   </description>
+   <feature url="features/de.partmaster.obfuscate4e_0.7.1.200906021638.jar" id="de.partmaster.obfuscate4e" version="0.7.1.200906021638">
+      <category name="Obfuscate4e"/>
+   </feature>
+   <feature url="features/de.partmaster.obfuscate4e.proguard_0.7.1.200906021638.jar" id="de.partmaster.obfuscate4e.proguard" version="0.7.1.200906021638">
+      <category name="Obfuscate4e"/>
+   </feature>
+   <category-def name="Obfuscate4e" label="Obfuscation for Eclipse">
+      <description>
+         Integration of obfuscators into the Eclipse PDE build
+      </description>
+   </category-def>
+</site>
