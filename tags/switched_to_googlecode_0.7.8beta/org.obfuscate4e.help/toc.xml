@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Obfuscate4e Users Guide">
+    <topic label="Installation" href="html/install.html"/> 
+    <topic label="Configuration" href="html/configure.html">
+        <topic label="Exclude classes and packages" href="html/configure_exclude.html">
+            <topic label="Exclude a package" href="html/configure_exclude_a_package.html"/>
+            <topic label="Exclude a single class" href="html/configure_exclude_a_class.html"/>
+            <topic label="Exclude all classes of a certain kind" href="html/configure_exclude_custom.html"/>
+        </topic> 
+    </topic> 
+    <topic label="Obfuscate your code" href="html/obfuscate.html"/> 
+    <topic label="Solve problems" href="html/solve_problems.html"> 
+        <topic label="Run obfuscate in verbose mode" href="html/run_o4e_verbose.html"/> 
+    </topic>
+</toc>

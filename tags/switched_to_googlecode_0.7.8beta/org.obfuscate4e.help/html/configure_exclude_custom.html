@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+  <title>Exclude all classes of a certain kind</title>
+</head>
+
+<body>
+  <h1>Exclude all classes of a certain kind</h1>
+
+  <p>To exclude all classes that implement a certain interface or extend a certain class (e.g. all views, actions,
+  perspectives, wizards, ...) in a generic way you need to exclude the appropriate interfaces or super classes:</p>
+  <pre>
+-keep class * extends org.eclipse.ui.part.ViewPart {
+        public *;
+}
+
+-keep class * implements org.eclipse.jface.action.IAction {
+        public *;
+}
+
+-keep class * implements org.eclipse.ui.IPerspectiveFactory {
+        public *;
+}
+
+-keep class * implements org.eclipse.equinox.app.IApplication {
+        public *;
+}
+
+-keep class * implements org.eclipse.jface.wizard.IWizard {
+        public *;
+}
+</pre>
+
+  <p>To exclude all access methods (getters and setters) there is another generic way:</p>
+  <pre>
+-keep class * implements org.example.AnyInterface {
+    void set*(***);
+    void set*(int, ***);
+
+    boolean is*();
+    boolean is*(int);
+
+    *** get*();
+    *** get*(int);
+}
+</pre>
+
+  <p><em>Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the
+  configuration!</em></p>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <!-- example of including a lib into eclipse's ant path -->
+   <!--extension
+         point="org.eclipse.ant.core.extraClasspathEntries">
+      <extraClasspathEntry
+            library="lib/o4e-ant.jar">
+      </extraClasspathEntry>
+   </extension-->
+</plugin>
