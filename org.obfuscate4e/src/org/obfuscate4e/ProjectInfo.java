@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
+import org.eclipse.pde.core.plugin.IExtensions;
 import org.eclipse.pde.core.plugin.IPluginAttribute;
 import org.eclipse.pde.core.plugin.IPluginElement;
 import org.eclipse.pde.core.plugin.IPluginExtension;
@@ -102,10 +103,13 @@ public class ProjectInfo {
 			return itsJavaAttributeValuesList;
 		}
 		ArrayList resultList = new ArrayList();
-		IPluginExtension[] extensions = getPluginModel().getExtensions(true)
-				.getExtensions();
-		for (int i = 0; i < extensions.length; i++) {
-			IPluginExtension extension = extensions[i];
+		IExtensions extensions = getPluginModel().getExtensions(true);
+		if (extensions == null) {
+			return Collections.unmodifiableList(resultList);
+		}
+		IPluginExtension[] pluginExtensions = extensions.getExtensions();
+		for (int i = 0; i < pluginExtensions.length; i++) {
+			IPluginExtension extension = pluginExtensions[i];
 			ISchema schema = PDECore.getDefault().getSchemaRegistry()
 					.getSchema(extension.getPoint());
 			if (schema == null) {
