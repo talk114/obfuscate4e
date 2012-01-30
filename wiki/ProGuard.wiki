@@ -1,0 +1,8 @@
+#summary ProGuard is a 3rd party obfuscator we integrated into obfuscate4e
+#labels Phase-Implementation
+
+= Proguard =
+
+Proguard is a ver powerful pure Java obfuscator. We use this obfuscator as the work horse for the obfuscate4e project.
+
+See: http://proguard.sourceforge.net/ 
