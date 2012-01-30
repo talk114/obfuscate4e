@@ -9,11 +9,11 @@
 To install this feature you simply have to use the update site facilities built into the Eclipse IDE.
 
   # Inside Eclipse go to _Help > Software Updates > Find and Install ..._ and define a remote site pointing to http://obfuscate4e.org/updates/
-    [http://code.google.com/p/obfuscate4e/wiki/images/update_site_preview.png Add obfuscate4e update site]
+    [https://obfuscate4e.googlecode.com/svn/wiki/images/update_site_preview.png Add obfuscate4e update site]
   # Select the _obfuscate4e_ feature from the list of installable features
-    [http://code.google.com/p/obfuscate4e/wiki/images/update_feature_preview.png Select the features]
+    [https://obfuscate4e.googlecode.com/svn/wiki/images/update_feature_preview.png Select the features]
   # Accept the [License license] and define the installation location.
-    [http://code.google.com/p/obfuscate4e/wiki/images/install_feature_preview.png Install the o4e feature]
+    [https://obfuscate4e.googlecode.com/svn/wiki/images/install_feature_preview.png Install the o4e feature]
   # Press <strong>Finish</strong> to install the software on your hard disk,
 
 That's it! Now you can use obfuscation in your projects.
@@ -24,7 +24,7 @@ Now it's time to configure how _obfuscate4e_ and its embedded obfuscator should 
 
 Execute the action _Create Proguard obfuscation configuration_ from the context menu of the plugin _MANIFEST.MF_.
 
-[http://code.google.com/p/{project-name}/wiki/images/generate_custombuildcallbacks.png Generate custombuildcallbacks.xml]
+[https://obfuscate4e.googlecode.com/svn/wiki/images/generate_custombuildcallbacks.png Generate custombuildcallbacks.xml]
 
 In the project folder appear two new files: _customBuildCallbacks.xml_ and _proguard.cfg_. These files are managed inside your project (and also version controlled).
 
