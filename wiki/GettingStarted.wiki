@@ -9,11 +9,11 @@
 To install this feature you simply have to use the update site facilities built into the Eclipse IDE.
 
   # Inside Eclipse go to _Help > Software Updates > Find and Install ..._ and define a remote site pointing to http://obfuscate4e.org/updates/
-    [https://obfuscate4e.googlecode.com/svn/wiki/images/update_site_preview.png Add obfuscate4e update site]
+    http://obfuscate4e.googlecode.com/svn/wiki/images/update_site_preview.png
   # Select the _obfuscate4e_ feature from the list of installable features
-    [https://obfuscate4e.googlecode.com/svn/wiki/images/update_feature_preview.png Select the features]
+    http://obfuscate4e.googlecode.com/svn/wiki/images/update_feature_preview.png
   # Accept the [License license] and define the installation location.
-    [https://obfuscate4e.googlecode.com/svn/wiki/images/install_feature_preview.png Install the o4e feature]
+    http://obfuscate4e.googlecode.com/svn/wiki/images/install_feature_preview.png
   # Press <strong>Finish</strong> to install the software on your hard disk,
 
 That's it! Now you can use obfuscation in your projects.
@@ -24,7 +24,7 @@ Now it's time to configure how _obfuscate4e_ and its embedded obfuscator should 
 
 Execute the action _Create Proguard obfuscation configuration_ from the context menu of the plugin _MANIFEST.MF_.
 
-[https://obfuscate4e.googlecode.com/svn/wiki/images/generate_custombuildcallbacks.png Generate custombuildcallbacks.xml]
+http://obfuscate4e.googlecode.com/svn/wiki/images/generate_custombuildcallbacks.png
 
 In the project folder appear two new files: _customBuildCallbacks.xml_ and _proguard.cfg_. These files are managed inside your project (and also version controlled).
 
@@ -50,9 +50,9 @@ There are to options if you want to add other packages to the exclution list:<!-
   # Export the package using the Manifest editor (if this is useful for your project)
   # Add a following lines to the plugin's _proguard.cfg_ file:
     {{{
-    -keep class de.example.plugin.* {
-      public protected *; 
-    }
+-keep class de.example.plugin.* {
+  public protected *; 
+}
     }}}
   _Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!_
 
@@ -107,21 +107,21 @@ To exclude all access methods (getters and setters) there is another generic way
 }
 }}}
 
-_Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!_
+_Remark: If you modified the `proguard.cfg` file manually, then these changes will be lost when re-generating the configuration!_
 
 ==Obfuscate your code==
 
 It's time to use your obfuscator. As it is embedded into the built process Eclipse runs the obfuscator when exporting a plugin, a project or a complete product.
 
-Export a plugin with _File &gt; Export ..._
+Export a plugin with _File > Export ..._
 
-<img alt="Export your plugin" src="images/export_plugin_preview.png" height="400" width="381">
+https://obfuscate4e.googlecode.com/svn/wiki/images/export_plugin_preview.png
 
 The plugin will be obfuscated and exported.
 
 If you <a href="http://obfuscate4e.org/run-the-obfuscator-in-verbose-mode">run the obfuscation in "verbose" mode</a>, then you can see ant processing the plugin and&nbsp; check the applied names mapping in the file _proguard.map_. This file is located in the folder _temp.folder/_ of the plugin. This file shows a list of processed files as well as the names of class, fields and methods after obfuscation.
 
-<img alt="Watch the applied mapping of classes, fields and methods" src="images/proguard_map_preview.png">
+https://obfuscate4e.googlecode.com/svn/wiki/images/proguard_map_preview.png
 
 ==Solving problems==
 
@@ -155,7 +155,7 @@ The <code>$(echo plugins/* | tr " " ",")</code> selects all jars and folders ins
 
 A window pops up and you can traverse the class structure and look at the obfuscated build.
 
-<img src="images/screenshot-jode.png" alt="screenshot-jode.png" width="500">
+https://obfuscate4e.googlecode.com/svn/wiki/images/screenshot-jode.png
 
 ===Run the obfuscator in verbose mode===
 
@@ -169,7 +169,7 @@ At first generate a build.xml file by clicking on _PDE Tools &gt; Create Ant Bui
 Then run the build.xml file by clicking the _Run As &gt; Ant Build_ entry of the context menu of the _build.xml_ file.<br>
 The output of the plugin build is shown in the console view. Warnings and error messages are highlighted.
 
-<img alt="Run the build script" src="images/run-build_xml_preview.png" height="159" width="400">
+https://obfuscate4e.googlecode.com/svn/wiki/images/run-build_xml_preview.png
 
 The target _post.@dot_ contains the messages relevant to the obfuscation. In the above screenshot there is a error message:
 
@@ -188,7 +188,7 @@ The target _post.@dot_ contains the messages relevant to the obfuscation. In the
 
 In this case _Ant_ could not find the declaration of the _proguard_ task. This should not happen in practice - otherwise check your Eclipse installation in _Help &gt; Software Updates &gt; Manage configuration_ for broken plugin dependencies.<br>As a rule of thumb you should follow make sure that you
 
-# rebuild the _customBuildCallbacks.xml_ file if you change the package structure of the plugin,
-# rebuild the _build.xml_ file if you change anything in _customBuildCallbacks.xml_.
-# run the _build.xml_ script in verbose mode if you cant find the error.
-# Attach the verbose console output together with the file proguard.properties to any <a href="https://sourceforge.net/tracker/?group_id=202507">bug report</a> and name the version of Java and Eclipse you are using.
+  # rebuild the _customBuildCallbacks.xml_ file if you change the package structure of the plugin,
+  # rebuild the _build.xml_ file if you change anything in _customBuildCallbacks.xml_.
+  # run the _build.xml_ script in verbose mode if you cant find the error.
+  # Attach the verbose console output together with the file proguard.properties to any <a href="https://sourceforge.net/tracker/?group_id=202507">bug report</a> and name the version of Java and Eclipse you are using.
