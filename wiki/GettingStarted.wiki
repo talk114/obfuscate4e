@@ -8,10 +8,13 @@
 
 To install this feature you simply have to use the update site facilities built into the Eclipse IDE.
 
-# Inside Eclipse go to _Help &gt; Software Updates &gt; Find and Install ..._ and define a remote site pointing to <a href="http://obfuscate4e.org/updates/">http://obfuscate4e.org/updates/</a><br><img alt="Add obfuscate4e update site" src="images/update_site_preview.png" height="400" width="393">
-# Select the _obfuscate4e_ feature from the list of installable features<br><img alt="Select the features" src="images/update_feature_preview.png" height="333" width="400">
-# Accept the <a href="http://obfuscate4e.org/license">license</a> and define the installation location.<br><img alt="Install the o4e feature" src="images/install_feature_preview.png" height="333" width="400">
-# Press <strong>Finish</strong> to install the software on your hard disk,
+  # Inside Eclipse go to _Help > Software Updates > Find and Install ..._ and define a remote site pointing to http://obfuscate4e.org/updates/
+    [http://code.google.com/p/obfuscate4e/wiki/images/update_site_preview.png Add obfuscate4e update site]
+  # Select the _obfuscate4e_ feature from the list of installable features
+    [http://code.google.com/p/obfuscate4e/wiki/images/update_feature_preview.png Select the features]
+  # Accept the [License license] and define the installation location.
+    [http://code.google.com/p/obfuscate4e/wiki/images/install_feature_preview.png Install the o4e feature]
+  # Press <strong>Finish</strong> to install the software on your hard disk,
 
 That's it! Now you can use obfuscation in your projects.
 
@@ -21,7 +24,7 @@ Now it's time to configure how _obfuscate4e_ and its embedded obfuscator should 
 
 Execute the action _Create Proguard obfuscation configuration_ from the context menu of the plugin _MANIFEST.MF_.
 
-<img src="images/generate_custombuildcallbacks.png" alt="Generate custombuildcallbacks.xml" height="490" width="500">
+[http://code.google.com/p/{project-name}/wiki/images/generate_custombuildcallbacks.png Generate custombuildcallbacks.xml]
 
 In the project folder appear two new files: _customBuildCallbacks.xml_ and _proguard.cfg_. These files are managed inside your project (and also version controlled).
 
@@ -44,15 +47,13 @@ By default _obfuscate4e_ adds all exported packages of a plugin to the exclusion
 
 There are to options if you want to add other packages to the exclution list:<!--break-->
 
-# Export the package using the Manifest editor (if this is useful for your project)
-# Add a following lines to the plugin's _proguard.cfg_ file:<br>
-
-  {{{
-  -keep class de.example.plugin.* {
-    public protected *; 
-  }
-  }}}
-
+  # Export the package using the Manifest editor (if this is useful for your project)
+  # Add a following lines to the plugin's _proguard.cfg_ file:
+    {{{
+    -keep class de.example.plugin.* {
+      public protected *; 
+    }
+    }}}
   _Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!_
 
 ====Exclude a single class====
