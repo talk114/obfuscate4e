@@ -1,8 +1,0 @@
-#summary How to get the software.
-#labels Phase-Deploy,Featured
-
-= Downloads =
-
-_Obfuscate4e_ is provided as an Eclipse Update site. Point your Eclipse Update manager to the URL  http://obfuscate4e.org/updates to install this software.
-
-Alternatively the Update site can be downloaded as an zip archive file from [https://code.google.com/p/obfuscate4e/downloads/list this project site]. Older versions (before June 2009) are provided at [https://sourceforge.net/project/showfiles.php?group_id=202507 Sourceforge].
