@@ -1,4 +1,4 @@
-#summary Getting started=
+#summary Getting started
 #labels Phase-Deploy
 #sidebar TableOfContents
 
