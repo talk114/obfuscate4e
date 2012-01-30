@@ -1,0 +1,92 @@
+#summary Solving problems during obfuscation
+
+=Solving problems=
+
+<wiki:toc/>
+
+If the _obfuscate4e_ plugin does not work as expected, then you have some possibilities at hand.
+
+  * If the obfuscation works manually at first run, but not at subsequent runs: Refresh the Eclipse workspace and check if there is a folder <tt>@dot</tt> or <tt>temp.folder</tt> in the plugin project. If they are, then remove it. Eclipse _PDE_ build doesn&acirc;&euro;&trade;t run the customBuildCallbacks if they exist.
+  * Check the obfuscation setting in the _proguard.cfg_ file in your plugin project. The syntax of this file is explained at the [http://proguard.sourceforge.net/ Proguard website] (look at the Usage section).
+  * Run the obfuscation in verbose mode. Ant produces some output which might show the problem.
+  * Go to the [http://code.google.com/p/obfuscate4e/issues/list bug tracker], there might be solutions matching your problem.
+  * If you encountered a bug, then you might submit a [http://code.google.com/p/obfuscate4e/issues/list bug report].
+
+Please submit the following information:
+
+  * The version of your _Java_ and _Eclipse_ installations,
+  * The contents of _proguard.cfg_ and _temp.folder/proguard.map_, if available,
+  * The output of the _verbose_ mode Ant run (see next section for details),
+  * optionally the _MANIFEST.MF_ of the plugin (to ease the check of the proguard configuration).
+
+==Inspect the obfuscated product==
+
+It is quite easy to look how _obfuscate4e_ processed your product. You need a
+de-compiler and an exported Eclipse _RCP_ product. I&acirc;&euro;&trade;ll
+describe the procedure on a linux box.
+I use [http://jode.sourceforge.net/ Jode]. This Project seems
+&acirc;&euro;&oelig;dead&acirc;&euro;, at least there were no new releases
+[https://sourceforge.net/projects/jode/files/ since 2004]. But it works well
+for this job.
+
+Download the [https://sourceforge.net/projects/jode/files/ latest jode
+distribution] and extract the file <code>jode*.jar</code>. Then open a shell an
+go to the folder where you exported the product to. Now execute the command
+shown below:
+
+{{{
+java -jar ~/Apps/jode-1.1.2-pre1.jar $(echo plugins/*  | tr " " ",")
+}}}
+
+The <code>$(echo plugins/* | tr " " ",")</code> selects all jars and folders inside the <code>plugins/</code> directory and compiles tthem into a comma separated list. That&acirc;&euro;&trade;s how _jode_ expects the resources to be inspected.
+
+A window pops up and you can traverse the class structure and look at the obfuscated build.
+
+https://obfuscate4e.googlecode.com/svn/wiki/images/screenshot-jode.png
+
+==Run the obfuscator in verbose mode==
+
+It might happen that the obfuscation does not work as expected. In this case
+there may be some "strange" folders in your project and the generated plugin
+jar contains non-obfuscated classes.
+
+But the build process runs in headless mode and no errors or warnings are
+printed out in the console view.
+
+The easiest way to debug the obfuscation process is to create and execute a
+build.xml file for the plugin.
+
+At first generate a build.xml file by clicking on _PDE Tools > Create Ant Build
+File_ in the context menu of the project or the _META-INF/MANIFEST.MF_ file.
+Then run the build.xml file by clicking the _Run As > Ant Build_ entry of the
+context menu of the _build.xml_ file.<br> The output of the plugin build is
+shown in the console view. Warnings and error messages are highlighted.
+
+https://obfuscate4e.googlecode.com/svn/wiki/images/run-build_xml_preview.png
+
+The target _post.@dot_ contains the messages relevant to the obfuscation. In
+the above screenshot there is a error message:
+
+{{{
+[subant] Failure for target 'post.@dot' of:
+         /prj/de.partmaster.mytest/customBuildCallbacks.xml
+[subant] The following error occurred while executing this line:
+[subant] /prj/de.partmaster.mytest/customBuildCallbacks.xml:119:
+         Problem: failed to create task or type proguard
+[subant] Cause: The name is undefined.
+[subant] Action: Check the spelling.
+[subant] Action: Check that any custom tasks/types have been declared.
+[subant] Action: Check that any <presetdef>/<macrodef> 
+         declarations have taken place.
+}}}
+
+In this case _Ant_ could not find the declaration of the _proguard_ task. This
+should not happen in practice - otherwise check your Eclipse installation in
+_Help > Software Updates > Manage configuration_ for broken plugin
+dependencies.
+As a rule of thumb you should follow make sure that you
+
+  # rebuild the _customBuildCallbacks.xml_ file if you change the package structure of the plugin,
+  # rebuild the _build.xml_ file if you change anything in _customBuildCallbacks.xml_.
+  # run the _build.xml_ script in verbose mode if you cant find the error.
+  # Attach the verbose console output together with the file proguard.properties to any [https://sourceforge.net/tracker/?group_id=202507 bug report] and name the version of Java and Eclipse you are using.
