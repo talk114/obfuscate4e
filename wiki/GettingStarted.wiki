@@ -3,20 +3,6 @@
 
 <wiki:toc/>
 
-=Installation of the obfuscate4e feature=
-
-To install this feature you simply have to use the update site facilities built into the Eclipse IDE.
-
-  # Inside Eclipse go to _Help > Software Updates > Find and Install ..._ and define a remote site pointing to http://obfuscate4e.org/updates/
-    http://obfuscate4e.googlecode.com/svn/wiki/images/update_site_preview.png
-  # Select the _obfuscate4e_ feature from the list of installable features
-    http://obfuscate4e.googlecode.com/svn/wiki/images/update_feature_preview.png
-  # Accept the [License license] and define the installation location.
-    http://obfuscate4e.googlecode.com/svn/wiki/images/install_feature_preview.png
-  # Press <strong>Finish</strong> to install the software on your hard disk,
-
-That's it! Now you can use obfuscation in your projects.
-
 =Configure the obfuscation=
 
 Now it's time to configure how _obfuscate4e_ and its embedded obfuscator should work. We use the ProGuard obfuscator in this sectin. The configuration of other obfuscators will differ.
