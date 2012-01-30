@@ -104,6 +104,6 @@ https://obfuscate4e.googlecode.com/svn/wiki/images/export_plugin_preview.png
 
 The plugin will be obfuscated and exported.
 
-If you <a href="http://obfuscate4e.org/run-the-obfuscator-in-verbose-mode">run the obfuscation in "verbose" mode</a>, then you can see ant processing the plugin and&nbsp; check the applied names mapping in the file _proguard.map_. This file is located in the folder _temp.folder/_ of the plugin. This file shows a list of processed files as well as the names of class, fields and methods after obfuscation.
+If you [SolvingProblems#Run_the_obfuscator_in_verbose_mode run the obfuscation in "verbose" mode], then you can see ant processing the plugin and&nbsp; check the applied names mapping in the file _proguard.map_. This file is located in the folder _temp.folder/_ of the plugin. This file shows a list of processed files as well as the names of class, fields and methods after obfuscation.
 
 https://obfuscate4e.googlecode.com/svn/wiki/images/proguard_map_preview.png
