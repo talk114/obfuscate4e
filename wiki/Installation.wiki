@@ -1,5 +1,5 @@
+#summary Installation of the obfuscate4e feature
 #labels Phase-Deploy
-# Installation of the obfuscate4e feature
 
 = Installation =
 
