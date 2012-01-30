@@ -5,11 +5,10 @@
 The Eclipse Build process can be highly customized. The things _obfuscate4e_ does are
 
   * Register an Ant task for the obfuscator (currently ProGuard) in the Eclipse platform.
-  * Create an Ant script (_custombuildcallbacks.xml_) containing a set of
-    pre-defined targets. These targets are hooks for additional build code. Per
+  * Create an Ant script (_custombuildcallbacks.xml_) containing a set of pre-defined targets.
+    These targets are hooks for additional build code. Per
     default they are left empty.
-  * Implement the hooks as desired. _obfuscate4e_ puts the code to run the
-    obfuscation process into the Ant task _post.@dot_.
+  * Implement the hooks as desired. _obfuscate4e_ puts the code to run the obfuscation process into the Ant task _post.@dot_.
   * Create the proguard.properties file containing the obfuscation rules of the plugin.
   * Register the Ant script in the _build.properties_ of the plugin.
 
