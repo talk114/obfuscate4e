@@ -1,0 +1,193 @@
+#summary Getting started=
+#labels Phase-Deploy
+#sidebar TableOfContents
+
+=Getting started=
+
+==Installation of the obfuscate4e feature==
+
+To install this feature you simply have to use the update site facilities built into the Eclipse IDE.
+
+# Inside Eclipse go to _Help &gt; Software Updates &gt; Find and Install ..._ and define a remote site pointing to <a href="http://obfuscate4e.org/updates/">http://obfuscate4e.org/updates/</a><br><img alt="Add obfuscate4e update site" src="images/update_site_preview.png" height="400" width="393">
+# Select the _obfuscate4e_ feature from the list of installable features<br><img alt="Select the features" src="images/update_feature_preview.png" height="333" width="400">
+# Accept the <a href="http://obfuscate4e.org/license">license</a> and define the installation location.<br><img alt="Install the o4e feature" src="images/install_feature_preview.png" height="333" width="400">
+# Press <strong>Finish</strong> to install the software on your hard disk,
+
+That's it! Now you can use obfuscation in your projects.
+
+==Configure the obfuscation==
+
+Now it's time to configure how _obfuscate4e_ and its embedded obfuscator should work. We use the ProGuard obfuscator in this sectin. The configuration of other obfuscators will differ.
+
+Execute the action _Create Proguard obfuscation configuration_ from the context menu of the plugin _MANIFEST.MF_.
+
+<img src="images/generate_custombuildcallbacks.png" alt="Generate custombuildcallbacks.xml" height="490" width="500">
+
+In the project folder appear two new files: _customBuildCallbacks.xml_ and _proguard.cfg_. These files are managed inside your project (and also version controlled).
+
+<img src="images/new_custombuildcallbacks.png" alt="New build script" height="130" width="285">
+
+ProGuard allows to highly customize the obfuscation process. You can add cunfiguration statements to the _proguard.cfg_ file. See <a href="http://proguard.sourceforge.net/manual/usage.html">http://proguard.sourceforge.net/manual/usage.html</a> for valid configuration parameters.
+
+===Excluding classes or packages from obfuscation===
+
+Obfuscate4e detects exported packages and and writes the corresponding obfuscation exclusion statements automatically into the file _proguard.cfg_ at your plugin's root directory.
+
+Starting from version 0.7 of _obfuscate4e_ all classes references from plugin extensions (in _plugin.xml_) are automatically inserted into the obfuscator exclusion list. Thus the obfuscate4e configuration should be updated whenever a new extension is added to the plugin.<br>
+_Remark: This feature works only on Eclipse 3.4 (there seems to be a bug or non-implemented feature in Eclipse 3.2 and 3.3)_
+
+Of course you can add custom exclusion statements by hand. For instance If a class gets instantiated via reflection or is referenced by name in any other way, it has to be excluded.
+
+====Exclude all classes in a package====
+
+By default _obfuscate4e_ adds all exported packages of a plugin to the exclusion list.
+
+There are to options if you want to add other packages to the exclution list:<!--break-->
+
+# Export the package using the Manifest editor (if this is useful for your project)
+# Add a following lines to the plugin's _proguard.cfg_ file:<br>
+
+  {{{
+  -keep class de.example.plugin.* {
+    public protected *; 
+  }
+  }}}
+
+  _Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!_
+
+====Exclude a single class====
+
+You might want to exclude a certain file from obfuscation. This might be the case if the class is used in an extension of your plugin.<!--break-->
+
+To exclude a class from obfuscation you have to add a statement like
+
+{{{
+-keep class de.example.plugin.actions.MySpecialAction {
+  public protected *;
+}
+}}}
+
+to the _proguard.cfg_ file. All other classes in the package _de.example.plugin.actions_ are completely obfuscated.
+
+_Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!_
+
+====Exclude all classes of a certain kind====
+
+To exclude all classes that implement a certain interface or extend a certain class (e.g. all views, actions, perspectives, wizards, ...) in a generic way you need to exclude the appropriate interfaces or super classes:
+
+{{{
+-keep class * extends org.eclipse.ui.part.ViewPart {
+  public *;
+}
+-keep class * implements org.eclipse.jface.action.IAction {
+  public *;
+}
+-keep class * implements org.eclipse.ui.IPerspectiveFactory {
+  public *;
+}
+-keep class * implements org.eclipse.equinox.app.IApplication {
+  public *;
+}
+-keep class * implements org.eclipse.jface.wizard.IWizard {
+  public *;
+}
+}}}
+
+To exclude all access methods (getters and setters) there is another generic way:
+
+{{{
+-keep class * implements org.example.AnyInterface {
+  void set*(***);
+  void set*(int, ***);
+  boolean is*();
+  boolean is*(int);
+  *** get*();
+  *** get*(int);
+}
+}}}
+
+_Remark: If you modified the proguard.cfg file manually, then these changes will be lost when re-generating the configuration!_
+
+==Obfuscate your code==
+
+It's time to use your obfuscator. As it is embedded into the built process Eclipse runs the obfuscator when exporting a plugin, a project or a complete product.
+
+Export a plugin with _File &gt; Export ..._
+
+<img alt="Export your plugin" src="images/export_plugin_preview.png" height="400" width="381">
+
+The plugin will be obfuscated and exported.
+
+If you <a href="http://obfuscate4e.org/run-the-obfuscator-in-verbose-mode">run the obfuscation in "verbose" mode</a>, then you can see ant processing the plugin and&nbsp; check the applied names mapping in the file _proguard.map_. This file is located in the folder _temp.folder/_ of the plugin. This file shows a list of processed files as well as the names of class, fields and methods after obfuscation.
+
+<img alt="Watch the applied mapping of classes, fields and methods" src="images/proguard_map_preview.png">
+
+==Solving problems==
+
+If the _obfuscate4e_ plugin does not work as expected, then you have some possibilities at hand.
+
+* If the obfuscation works manually at first run, but not at subsequent runs: Refresh the Eclipse workspace and check if there is a folder <tt>@dot</tt> or <tt>temp.folder</tt> in the plugin project. If they are, then remove it. Eclipse _PDE_ build doesn&acirc;&euro;&trade;t run the customBuildCallbacks if they exist.
+* Check the obfuscation setting in the _proguard.cfg_ file in your plugin project. The syntax of this file is explained at the <a href="http://proguard.sourceforge.net/">Proguard website</a> (look at the Usage section).
+* Run the obfuscation in verbose mode. Ant produces some output which might show the problem.
+* Go to the <a href="http://code.google.com/p/obfuscate4e/issues/list">bug tracker</a>, there might be solutions matching your problem.
+* If you encountered a bug, then you might submit a <a href="http://code.google.com/p/obfuscate4e/issues/list">bug report</a>.
+
+Please submit the following information:
+
+* The version of your _Java_ and _Eclipse_ installations,
+* The contents of _proguard.cfg_ and _temp.folder/proguard.map_, if available,
+* The output of the _verbose_ mode Ant run (see next section for details),
+* optionally the _MANIFEST.MF_ of the plugin (to ease the check of the proguard configuration).
+
+===Inspect the obfuscated product===
+
+It is quite easy to look how _obfuscate4e_ processed your product. You need a de-compiler and an exported Eclipse _RCP_ product. I&acirc;&euro;&trade;ll describe the procedure on a linux box.<br>
+I use <a href="http://jode.sourceforge.net/">Jode</a>. This Project seems &acirc;&euro;&oelig;dead&acirc;&euro;, at least there were no new releases <a href="https://sourceforge.net/projects/jode/files/">since 2004</a>. But it works well for this job.
+
+Download the <a href="https://sourceforge.net/projects/jode/files/">latest jode distribution</a> and extract the file <code>jode*.jar</code>. Then open a shell an go to the folder where you exported the product to. Now execute the command shown below:
+
+{{{
+java -jar ~/Apps/jode-1.1.2-pre1.jar $(echo plugins/*  | tr " " ",")
+}}}
+
+The <code>$(echo plugins/* | tr " " ",")</code> selects all jars and folders inside the <code>plugins/</code> directory and compiles tthem into a comma separated list. That&acirc;&euro;&trade;s how _jode_ expects the resources to be inspected.
+
+A window pops up and you can traverse the class structure and look at the obfuscated build.
+
+<img src="images/screenshot-jode.png" alt="screenshot-jode.png" width="500">
+
+===Run the obfuscator in verbose mode===
+
+It might happen that the obfuscation does not work as expected. In this case there may be some "strange" folders in your project and the generated plugin jar contains non-obfuscated classes.
+
+But the build process runs in headless mode and no errors or warnings are printed out in the console view.
+
+The easiest way to debug the obfuscation process is to create and execute a build.xml file for the plugin.
+
+At first generate a build.xml file by clicking on _PDE Tools &gt; Create Ant Build File_ in the context menu of the project or the _META-INF/MANIFEST.MF_ file.<br>
+Then run the build.xml file by clicking the _Run As &gt; Ant Build_ entry of the context menu of the _build.xml_ file.<br>
+The output of the plugin build is shown in the console view. Warnings and error messages are highlighted.
+
+<img alt="Run the build script" src="images/run-build_xml_preview.png" height="159" width="400">
+
+The target _post.@dot_ contains the messages relevant to the obfuscation. In the above screenshot there is a error message:
+
+{{{
+[subant] Failure for target 'post.@dot' of:
+      /prj/de.partmaster.mytest/customBuildCallbacks.xml
+[subant] The following error occurred while executing this line:
+[subant] /prj/de.partmaster.mytest/customBuildCallbacks.xml:119:
+      Problem: failed to create task or type proguard
+[subant] Cause: The name is undefined.
+[subant] Action: Check the spelling.
+[subant] Action: Check that any custom tasks/types have been declared.
+[subant] Action: Check that any &lt;presetdef&gt;/&lt;macrodef&gt; 
+        declarations have taken place.
+}}}
+
+In this case _Ant_ could not find the declaration of the _proguard_ task. This should not happen in practice - otherwise check your Eclipse installation in _Help &gt; Software Updates &gt; Manage configuration_ for broken plugin dependencies.<br>As a rule of thumb you should follow make sure that you
+
+# rebuild the _customBuildCallbacks.xml_ file if you change the package structure of the plugin,
+# rebuild the _build.xml_ file if you change anything in _customBuildCallbacks.xml_.
+# run the _build.xml_ script in verbose mode if you cant find the error.
+# Attach the verbose console output together with the file proguard.properties to any <a href="https://sourceforge.net/tracker/?group_id=202507">bug report</a> and name the version of Java and Eclipse you are using.
